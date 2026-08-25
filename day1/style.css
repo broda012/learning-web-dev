@@ -1,3 +1,7 @@
+:root {
+  --brand-color: var(--brand-color);
+}
+
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f6f8;
@@ -8,11 +12,11 @@ body {
 }
 
 h1 {
-  color: #0b5394;
+  color: var(--brand-color);
 }
 
 button {
-  background-color: #0b5394;
+  background-color: var(--brand-color);
   color: white;
   padding: 10px 20px;
   border: none;
@@ -45,5 +49,5 @@ button {
 
 .review-badge .review-name {
   font-weight: bold;
-  color: #0b5394;
+  color: var(--brand-color);
 }
