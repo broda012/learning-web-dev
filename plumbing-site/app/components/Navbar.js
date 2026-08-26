@@ -33,6 +33,9 @@ export default function Navbar() {
           <a href="#reviews" className="hover:text-blue-400">
             Reviews
           </a>
+          <a href="#faq" className="hover:text-blue-400">
+            FAQ
+          </a>
         </div>
       </div>
 
@@ -65,6 +68,13 @@ export default function Navbar() {
             className="hover:text-blue-400"
           >
             Reviews
+          </a>
+          <a
+            href="#faq"
+            onClick={() => setIsOpen(false)}
+            className="hover:text-blue-400"
+          >
+            FAQ
           </a>
         </div>
       )}
