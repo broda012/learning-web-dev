@@ -1,4 +1,5 @@
 import Faq from "./components/Faq";
+import ContactForm from "./components/ContactForm";
 
 export default function Home() {
   return (
@@ -126,6 +127,28 @@ export default function Home() {
       </section>
 
       <Faq />
+
+      <section
+        id="contact"
+        className="bg-slate-900 text-white px-6 py-20"
+      >
+        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+          <div>
+            <h2 className="text-3xl font-bold mb-4">Get a Free Quote</h2>
+            <p className="text-slate-300 mb-8">
+              Fill out the form or call us directly — we're available 24/7
+              for emergencies.
+            </p>
+            <a
+              href="tel:1234567890"
+              className="inline-block bg-blue-600 hover:bg-blue-700 transition-colors text-white font-semibold px-6 py-3 rounded-lg"
+            >
+              Call Now: (123) 456-7890
+            </a>
+          </div>
+          <ContactForm />
+        </div>
+      </section>
     </main>
   );
 }

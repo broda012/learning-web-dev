@@ -36,6 +36,9 @@ export default function Navbar() {
           <a href="#faq" className="hover:text-blue-400">
             FAQ
           </a>
+          <a href="#contact" className="hover:text-blue-400">
+            Contact
+          </a>
         </div>
       </div>
 
@@ -75,6 +78,13 @@ export default function Navbar() {
             className="hover:text-blue-400"
           >
             FAQ
+          </a>
+          <a
+            href="#contact"
+            onClick={() => setIsOpen(false)}
+            className="hover:text-blue-400"
+          >
+            Contact
           </a>
         </div>
       )}
