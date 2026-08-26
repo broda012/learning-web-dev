@@ -149,6 +149,19 @@ export default function Home() {
           <ContactForm />
         </div>
       </section>
+
+      <section className="bg-white">
+        <iframe
+          src="https://www.google.com/maps?q=Toronto,ON&output=embed"
+          width="100%"
+          height="400"
+          style={{ border: 0 }}
+          allowFullScreen
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Service area map"
+        />
+      </section>
     </main>
   );
 }
