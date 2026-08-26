@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Pricing from "./components/Pricing";
 
 export default function Home() {
   return (
@@ -37,6 +38,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <Pricing />
     </main>
   );
 }
