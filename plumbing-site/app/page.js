@@ -90,6 +90,38 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="reviews" className="bg-white text-slate-900 px-6 py-20">
+        <h2 className="text-3xl font-bold text-center mb-12">
+          What Our Customers Say
+        </h2>
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="border border-slate-200 rounded-lg p-6">
+            <p className="text-amber-500 mb-2">★★★★★</p>
+            <p className="text-slate-600 mb-4">
+              "Fixed our burst pipe at 11pm on a Sunday. Fast, professional,
+              and fair pricing. Highly recommend."
+            </p>
+            <p className="font-semibold">— James, North York</p>
+          </div>
+          <div className="border border-slate-200 rounded-lg p-6">
+            <p className="text-amber-500 mb-2">★★★★★</p>
+            <p className="text-slate-600 mb-4">
+              "Cleared a drain that two other companies couldn't fix.
+              Explained everything clearly before starting."
+            </p>
+            <p className="font-semibold">— Sarah, Etobicoke</p>
+          </div>
+          <div className="border border-slate-200 rounded-lg p-6">
+            <p className="text-amber-500 mb-2">★★★★★</p>
+            <p className="text-slate-600 mb-4">
+              "Replaced our water heater same-day. Clean work and showed up
+              exactly on time."
+            </p>
+            <p className="font-semibold">— Thomas, Scarborough</p>
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

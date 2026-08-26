@@ -30,6 +30,9 @@ export default function Navbar() {
           <a href="#areas" className="hover:text-blue-400">
             Service Areas
           </a>
+          <a href="#reviews" className="hover:text-blue-400">
+            Reviews
+          </a>
         </div>
       </div>
 
@@ -55,6 +58,13 @@ export default function Navbar() {
             className="hover:text-blue-400"
           >
             Service Areas
+          </a>
+          <a
+            href="#reviews"
+            onClick={() => setIsOpen(false)}
+            className="hover:text-blue-400"
+          >
+            Reviews
           </a>
         </div>
       )}
