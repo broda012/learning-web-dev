@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Pricing from "./components/Pricing";
+import Gallery from "./components/Gallery";
 
 export default function Home() {
   return (
@@ -10,6 +11,7 @@ export default function Home() {
           alt="Freshly cleaned driveway"
           fill
           priority
+          sizes="100vw"
           className="object-cover"
         />
         <div className="absolute inset-0 bg-slate-900/60" />
@@ -40,6 +42,7 @@ export default function Home() {
       </section>
 
       <Pricing />
+      <Gallery />
     </main>
   );
 }
