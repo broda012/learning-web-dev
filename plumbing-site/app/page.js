@@ -54,6 +54,42 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      <section id="areas" className="bg-slate-50 text-slate-900 px-6 py-20">
+        <h2 className="text-3xl font-bold text-center mb-4">
+          Areas We Serve
+        </h2>
+        <p className="text-center text-slate-600 mb-12">
+          Proudly serving homeowners and businesses across the Greater
+          Toronto Area.
+        </p>
+        <div className="max-w-4xl mx-auto grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            North York
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Scarborough
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Etobicoke
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Downtown Toronto
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Mississauga
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Vaughan
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Markham
+          </div>
+          <div className="bg-white border border-slate-200 rounded-lg py-4">
+            Richmond Hill
+          </div>
+        </div>
+      </section>
     </main>
   );
 }

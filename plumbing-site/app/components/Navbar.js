@@ -27,6 +27,9 @@ export default function Navbar() {
           <a href="#services" className="hover:text-blue-400">
             Services
           </a>
+          <a href="#areas" className="hover:text-blue-400">
+            Service Areas
+          </a>
         </div>
       </div>
 
@@ -45,6 +48,13 @@ export default function Navbar() {
             className="hover:text-blue-400"
           >
             Services
+          </a>
+          <a
+            href="#areas"
+            onClick={() => setIsOpen(false)}
+            className="hover:text-blue-400"
+          >
+            Service Areas
           </a>
         </div>
       )}
