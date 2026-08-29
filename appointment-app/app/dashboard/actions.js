@@ -28,3 +28,57 @@ export async function addCustomer(formData) {
 
   revalidatePath("/dashboard");
 }
+
+export async function addAppointment(formData) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const customer_id = formData.get("customer_id");
+  const appointment_date = formData.get("appointment_date");
+  const notes = formData.get("notes");
+
+  const { error } = await supabase.from("appointments").insert({
+    customer_id,
+    appointment_date,
+    notes,
+    status: "scheduled",
+  });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/dashboard");
+}
+
+export async function updateAppointmentStatus(id, formData) {
+  const supabase = await createClient();
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  const status = formData.get("status");
+
+  const { error } = await supabase
+    .from("appointments")
+    .update({ status })
+    .eq("id", id);
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  revalidatePath("/dashboard");
+}
