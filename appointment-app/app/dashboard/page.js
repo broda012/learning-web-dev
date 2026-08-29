@@ -230,6 +230,7 @@ export default async function DashboardPage({ searchParams }) {
                       defaultValue={appointment.status}
                       className="border border-slate-300 rounded-md px-2 py-1 text-sm"
                     >
+                      <option value="requested">requested</option>
                       <option value="scheduled">scheduled</option>
                       <option value="completed">completed</option>
                       <option value="cancelled">cancelled</option>
