@@ -1,8 +1,13 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { addCustomer, addAppointment, updateAppointmentStatus } from "./actions";
+import {
+  addCustomer,
+  addAppointment,
+  updateAppointmentStatus,
+  signOut,
+} from "./actions";
 
-export default async function DashboardPage() {
+export default async function DashboardPage({ searchParams }) {
   const supabase = await createClient();
   const {
     data: { user },
@@ -12,10 +17,20 @@ export default async function DashboardPage() {
     redirect("/login");
   }
 
-  const { data: customers, error } = await supabase
+  const { q } = await searchParams;
+
+  let customersQuery = supabase
     .from("Customers")
     .select("*")
     .order("created_at", { ascending: false });
+
+  if (q) {
+    customersQuery = customersQuery.or(
+      `name.ilike.%${q}%,phone.ilike.%${q}%,email.ilike.%${q}%`
+    );
+  }
+
+  const { data: customers, error } = await customersQuery;
 
   const { data: appointments, error: appointmentsError } = await supabase
     .from("appointments")
@@ -24,8 +39,20 @@ export default async function DashboardPage() {
 
   return (
     <main className="min-h-screen bg-slate-50 p-8">
-      <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
-      <p className="text-slate-600 mb-8">Logged in as {user.email}</p>
+      <div className="flex items-center justify-between mb-8">
+        <div>
+          <h1 className="text-2xl font-bold mb-2">Dashboard</h1>
+          <p className="text-slate-600">Logged in as {user.email}</p>
+        </div>
+        <form action={signOut}>
+          <button
+            type="submit"
+            className="bg-white border border-slate-300 hover:bg-slate-100 transition-colors px-4 py-2 rounded-md text-sm font-medium"
+          >
+            Log Out
+          </button>
+        </form>
+      </div>
 
       <h2 className="text-xl font-semibold mb-4">Add Customer</h2>
 
@@ -66,7 +93,32 @@ export default async function DashboardPage() {
         </button>
       </form>
 
-      <h2 className="text-xl font-semibold mb-4">Customers</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-xl font-semibold">Customers</h2>
+        <form className="flex gap-2">
+          <input
+            type="text"
+            name="q"
+            defaultValue={q}
+            placeholder="Search by name, phone, or email"
+            className="border border-slate-300 rounded-md px-3 py-1.5 text-sm w-64"
+          />
+          <button
+            type="submit"
+            className="bg-slate-200 hover:bg-slate-300 transition-colors text-sm px-4 py-1.5 rounded-md"
+          >
+            Search
+          </button>
+          {q && (
+            <a
+              href="/dashboard"
+              className="text-sm text-slate-500 self-center hover:underline"
+            >
+              Clear
+            </a>
+          )}
+        </form>
+      </div>
 
       {error && (
         <p className="text-red-600 mb-4">
