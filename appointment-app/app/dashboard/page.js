@@ -209,6 +209,7 @@ export default async function DashboardPage({ searchParams }) {
               <th className="px-4 py-3">Customer</th>
               <th className="px-4 py-3">Date</th>
               <th className="px-4 py-3">Notes</th>
+              <th className="px-4 py-3">Deposit</th>
               <th className="px-4 py-3">Status</th>
             </tr>
           </thead>
@@ -220,6 +221,17 @@ export default async function DashboardPage({ searchParams }) {
                   {new Date(appointment.appointment_date).toLocaleString()}
                 </td>
                 <td className="px-4 py-3">{appointment.notes}</td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`text-xs font-semibold px-2 py-1 rounded-full ${
+                      appointment.payment_status === "paid"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-slate-100 text-slate-500"
+                    }`}
+                  >
+                    {appointment.payment_status || "pending"}
+                  </span>
+                </td>
                 <td className="px-4 py-3">
                   <form
                     action={updateAppointmentStatus.bind(null, appointment.id)}
