@@ -9,6 +9,7 @@ import {
   updateAppointmentStatus,
 } from "./actions";
 import AITools from "./AITools";
+import PaymentLink from "./PaymentLink";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -35,6 +36,15 @@ export default async function DashboardPage() {
     .select("*, contacts(name), listings(address)")
     .order("appointment_date", { ascending: true });
 
+  const totalLeads = contacts?.length || 0;
+  const clientCount = contacts?.filter((c) => c.stage === "client").length || 0;
+  const conversionRate =
+    totalLeads > 0 ? ((clientCount / totalLeads) * 100).toFixed(1) : "0.0";
+  const revenue =
+    contacts
+      ?.filter((c) => c.payment_status === "paid")
+      .reduce((sum, c) => sum + Number(c.deal_value || 0), 0) || 0;
+
   return (
     <main className="min-h-screen bg-slate-50 p-8">
       <div className="flex items-center justify-between mb-8">
@@ -50,6 +60,26 @@ export default async function DashboardPage() {
             Log Out
           </button>
         </form>
+      </div>
+
+      {/* Analytics */}
+      <h2 className="text-xl font-semibold mb-4">Analytics</h2>
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-sm text-slate-500 mb-1">Total Leads</p>
+          <p className="text-3xl font-bold">{totalLeads}</p>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-sm text-slate-500 mb-1">Conversion Rate</p>
+          <p className="text-3xl font-bold">{conversionRate}%</p>
+          <p className="text-xs text-slate-400 mt-1">
+            {clientCount} of {totalLeads} leads became clients
+          </p>
+        </div>
+        <div className="bg-white rounded-lg shadow p-6">
+          <p className="text-sm text-slate-500 mb-1">Revenue</p>
+          <p className="text-3xl font-bold">${revenue.toLocaleString()}</p>
+        </div>
       </div>
 
       {/* Contacts */}
@@ -111,6 +141,7 @@ export default async function DashboardPage() {
               <th className="px-4 py-3">Follow-up</th>
               <th className="px-4 py-3">Notes</th>
               <th className="px-4 py-3">Stage</th>
+              <th className="px-4 py-3">Payment</th>
             </tr>
           </thead>
           <tbody>
@@ -144,6 +175,22 @@ export default async function DashboardPage() {
                       Update
                     </button>
                   </form>
+                </td>
+                <td className="px-4 py-3">
+                  <span
+                    className={`text-xs font-semibold px-2 py-1 rounded-full mb-1 inline-block ${
+                      contact.payment_status === "paid"
+                        ? "bg-green-100 text-green-700"
+                        : "bg-slate-100 text-slate-500"
+                    }`}
+                  >
+                    {contact.payment_status || "unpaid"}
+                  </span>
+                  <PaymentLink
+                    contactId={contact.id}
+                    contactName={contact.name}
+                    currentDealValue={contact.deal_value}
+                  />
                 </td>
               </tr>
             ))}

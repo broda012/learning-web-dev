@@ -2,7 +2,10 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import Stripe from "stripe";
 import { createClient } from "@/lib/supabase/server";
+
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 export async function signOut() {
   const supabase = await createClient();
@@ -75,4 +78,39 @@ export async function updateAppointmentStatus(appointmentId, formData) {
     .eq("id", appointmentId);
 
   revalidatePath("/dashboard");
+}
+
+export async function createPaymentLink(contactId, contactName, dealValue) {
+  const supabase = await createClient();
+
+  await supabase
+    .from("contacts")
+    .update({ deal_value: dealValue })
+    .eq("id", contactId);
+
+  const origin = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3003";
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    payment_method_types: ["card"],
+    line_items: [
+      {
+        price_data: {
+          currency: "usd",
+          product_data: {
+            name: "Real Estate Service Fee",
+            description: `Payment for ${contactName}`,
+          },
+          unit_amount: Math.round(Number(dealValue) * 100),
+        },
+        quantity: 1,
+      },
+    ],
+    client_reference_id: String(contactId),
+    success_url: `${origin}/payment-success?session_id={CHECKOUT_SESSION_ID}`,
+    cancel_url: `${origin}/dashboard`,
+  });
+
+  revalidatePath("/dashboard");
+  return session.url;
 }
