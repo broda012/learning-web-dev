@@ -2,15 +2,39 @@
 
 import { useState } from "react";
 
+const WEBHOOK_URL = "https://broda12.app.n8n.cloud/webhook/driveway-lead";
+
 export default function BookingForm() {
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [service, setService] = useState("Driveway Wash");
   const [frequency, setFrequency] = useState("one-time");
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault();
+    setLoading(true);
+
+    try {
+      await fetch(WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name,
+          email,
+          phone,
+          message: `${service} - ${
+            frequency === "recurring" ? "Recurring" : "One-time"
+          } service requested.`,
+        }),
+      });
+    } catch (error) {
+      console.error("Failed to notify booking system:", error);
+    }
+
+    setLoading(false);
     setSubmitted(true);
   }
 
@@ -38,6 +62,17 @@ export default function BookingForm() {
           required
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className="w-full border border-slate-300 rounded-md px-4 py-2"
+        />
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium mb-1">Email</label>
+        <input
+          type="email"
+          required
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className="w-full border border-slate-300 rounded-md px-4 py-2"
         />
       </div>
@@ -92,9 +127,10 @@ export default function BookingForm() {
 
       <button
         type="submit"
-        className="bg-teal-500 hover:bg-teal-600 transition-colors text-white font-semibold py-3 rounded-md mt-2"
+        disabled={loading}
+        className="bg-teal-500 hover:bg-teal-600 transition-colors text-white font-semibold py-3 rounded-md mt-2 disabled:opacity-50"
       >
-        Book Now
+        {loading ? "Submitting..." : "Book Now"}
       </button>
     </form>
   );
