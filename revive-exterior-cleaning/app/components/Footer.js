@@ -13,7 +13,7 @@ export default function Footer() {
               <br />
               Cleaning
             </p>
-            <p className="text-sm leading-relaxed max-w-xs">
+            <p className="text-base leading-relaxed max-w-xs">
               Professional driveway, patio, walkway, and wheelie bin cleaning
               — local, reliable, and affordable.
             </p>

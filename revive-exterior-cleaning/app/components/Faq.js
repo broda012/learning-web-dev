@@ -25,7 +25,7 @@ function FaqItem({ faq, isOpen, onToggle }) {
         style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
       >
         <div className="overflow-hidden">
-          <p className="text-(--color-muted) text-sm leading-relaxed pt-3 pr-8">{faq.a}</p>
+          <p className="text-(--color-muted) text-base leading-relaxed pt-3 pr-8">{faq.a}</p>
         </div>
       </div>
     </div>

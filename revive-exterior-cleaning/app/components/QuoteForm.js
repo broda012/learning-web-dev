@@ -1,12 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { services } from "../lib/site";
+
+const initialForm = {
+  name: "",
+  phone: "",
+  email: "",
+  address: "",
+  service: services[0].name,
+  bins: "",
+  size: "",
+  date: "",
+  frequency: "one-time",
+  notes: "",
+};
 
 const WEBHOOK_URL = "https://broda12.app.n8n.cloud/webhook/driveway-bin-cleaning-lead";
 
 const inputClasses =
-  "w-full border border-(--color-border) rounded-lg px-4 py-3 text-sm text-(--color-body) placeholder:text-(--color-muted)/70 focus:outline-none focus:ring-2 focus:ring-(--color-terracotta) focus:border-transparent transition-shadow";
+  "w-full border border-(--color-border) rounded-lg px-4 py-3 text-base text-(--color-body) placeholder:text-(--color-muted)/70 focus:outline-none focus:ring-2 focus:ring-(--color-terracotta) focus:border-transparent transition-shadow";
 
 function compressImage(file, maxDimension = 1200, quality = 0.7) {
   return new Promise((resolve, reject) => {
@@ -38,22 +51,21 @@ function compressImage(file, maxDimension = 1200, quality = 0.7) {
 }
 
 export default function QuoteForm() {
-  const [form, setForm] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    address: "",
-    service: services[0].name,
-    bins: "",
-    size: "",
-    date: "",
-    frequency: "one-time",
-    notes: "",
-  });
+  const [form, setForm] = useState(initialForm);
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!submitted) return;
+    const timer = setTimeout(() => {
+      setSubmitted(false);
+      setForm(initialForm);
+      setPhoto(null);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, [submitted]);
 
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));

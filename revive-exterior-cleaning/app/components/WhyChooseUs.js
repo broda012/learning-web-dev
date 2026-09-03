@@ -53,7 +53,7 @@ export default function WhyChooseUs() {
                 </span>
                 <div>
                   <h3 className="font-bold text-(--color-ink) mb-1.5">{reason.title}</h3>
-                  <p className="text-(--color-muted) text-sm leading-relaxed">{reason.text}</p>
+                  <p className="text-(--color-muted) text-base leading-relaxed">{reason.text}</p>
                 </div>
               </div>
             </Reveal>

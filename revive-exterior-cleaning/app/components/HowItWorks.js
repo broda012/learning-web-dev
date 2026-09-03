@@ -42,7 +42,7 @@ export default function HowItWorks() {
                   {i + 1}
                 </div>
                 <h3 className="font-bold text-lg text-(--color-ink) mb-2">{step.title}</h3>
-                <p className="text-(--color-muted) text-sm leading-relaxed max-w-[22ch]">
+                <p className="text-(--color-muted) text-base leading-relaxed max-w-[24ch]">
                   {step.text}
                 </p>
               </div>
