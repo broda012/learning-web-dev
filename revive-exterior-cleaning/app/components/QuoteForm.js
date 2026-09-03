@@ -8,10 +8,30 @@ const WEBHOOK_URL = "https://broda12.app.n8n.cloud/webhook/driveway-bin-cleaning
 const inputClasses =
   "w-full border border-(--color-border) rounded-lg px-4 py-3 text-sm text-(--color-body) placeholder:text-(--color-muted)/70 focus:outline-none focus:ring-2 focus:ring-(--color-terracotta) focus:border-transparent transition-shadow";
 
-function readFileAsDataURL(file) {
+function compressImage(file, maxDimension = 1200, quality = 0.7) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
-    reader.onload = () => resolve(reader.result);
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        let { width, height } = img;
+        if (width > height && width > maxDimension) {
+          height = Math.round((height * maxDimension) / width);
+          width = maxDimension;
+        } else if (height > maxDimension) {
+          width = Math.round((width * maxDimension) / height);
+          height = maxDimension;
+        }
+
+        const canvas = document.createElement("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        canvas.getContext("2d").drawImage(img, 0, 0, width, height);
+        resolve(canvas.toDataURL("image/jpeg", quality));
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
     reader.onerror = reject;
     reader.readAsDataURL(file);
   });
@@ -46,7 +66,7 @@ export default function QuoteForm() {
       return;
     }
     try {
-      const dataUrl = await readFileAsDataURL(file);
+      const dataUrl = await compressImage(file);
       setPhoto({ name: file.name, dataUrl });
     } catch {
       setPhoto(null);
