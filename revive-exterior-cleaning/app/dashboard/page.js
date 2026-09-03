@@ -120,7 +120,10 @@ export default async function DashboardPage({ searchParams }) {
                     {lead.priority || "—"}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-(--color-muted)">{lead.ai_summary || "—"}</td>
+                <td
+                  className="px-4 py-3 text-(--color-muted) [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-(--color-ink) [&_strong]:font-semibold"
+                  dangerouslySetInnerHTML={{ __html: lead.ai_summary || "—" }}
+                />
                 <td className="px-4 py-3">
                   <form
                     action={updateLeadStatus.bind(null, lead.id)}
