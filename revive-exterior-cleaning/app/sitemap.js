@@ -1,4 +1,6 @@
-const baseUrl = "https://revive-exterior-cleaning.vercel.app";
+import { siteConfig } from "./lib/site";
+
+const baseUrl = siteConfig.url;
 
 export default function sitemap() {
   return [

@@ -1,11 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { galleryImages } from "../lib/site";
 
-const categories = ["All", "Driveways", "Bins", "Patios", "Walkways", "Before & After"];
+const categories = ["All", "Driveways", "Bins", "Patios", "Walkways", "Pressure Washing", "Before & After"];
 
 export default function Gallery() {
   const [active, setActive] = useState("All");
@@ -13,6 +13,26 @@ export default function Gallery() {
 
   const filtered =
     active === "All" ? galleryImages : galleryImages.filter((img) => img.category === active);
+
+  const isOpen = openIndex !== null;
+  const count = filtered.length;
+
+  // Keyboard support + lock page scroll while the lightbox is open.
+  useEffect(() => {
+    if (!isOpen) return;
+    function onKey(e) {
+      if (e.key === "Escape") setOpenIndex(null);
+      if (e.key === "ArrowRight") setOpenIndex((i) => (i + 1) % count);
+      if (e.key === "ArrowLeft") setOpenIndex((i) => (i - 1 + count) % count);
+    }
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", onKey);
+    return () => {
+      document.body.style.overflow = prevOverflow;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [isOpen, count]);
 
   function close() {
     setOpenIndex(null);
@@ -30,11 +50,11 @@ export default function Gallery() {
     <section className="py-24 md:py-32 px-6 bg-(--color-surface)">
       <div className="max-w-6xl mx-auto">
         <Reveal>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-sm uppercase tracking-[0.2em] mb-4">
+          <p className="eyebrow">
             Gallery
           </p>
           <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) mb-10 max-w-lg">
-            Real results, real surfaces.
+            Every surface, handled with care.
           </h2>
 
           <div className="flex flex-wrap gap-2 mb-10">
@@ -80,6 +100,9 @@ export default function Gallery() {
       {openIndex !== null && filtered[openIndex] && (
         <div
           className="fixed inset-0 z-[60] bg-(--color-ink-dark)/95 flex items-center justify-center p-6"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Image viewer"
           onClick={close}
         >
           <button

@@ -24,6 +24,7 @@ const localBusinessSchema = {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
   name: siteConfig.name,
+  url: siteConfig.url,
   description:
     "Professional driveway, patio, walkway, and wheelie bin cleaning services.",
   telephone: siteConfig.phone,
@@ -47,7 +48,7 @@ export default function SiteLayout({ children }) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessSchema) }}
       />
       <Navbar />
-      <main className="flex-1 pb-16 md:pb-0">{children}</main>
+      <main className="flex-1">{children}</main>
       <Footer />
       <MobileCtaBar />
     </div>

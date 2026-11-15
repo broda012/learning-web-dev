@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { signOut, updateLeadStatus } from "./actions";
+import { sanitizeSummaryHtml } from "./sanitize";
 
 const statusOptions = ["new", "contacted", "booked", "archived"];
 
@@ -31,7 +32,7 @@ export default async function DashboardPage({ searchParams }) {
     <main className="min-h-screen bg-(--color-cream) p-6 md:p-10">
       <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
         <div>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-xs uppercase tracking-[0.2em] mb-2">
+          <p className="font-[family-name:var(--font-mono)] text-(--color-accent-text) text-xs uppercase tracking-[0.2em] mb-2">
             Driveway &amp; Bin Cleaning
           </p>
           <h1 className="text-2xl font-bold text-(--color-ink)">Leads Dashboard</h1>
@@ -93,7 +94,14 @@ export default async function DashboardPage({ searchParams }) {
             {leads?.map((lead) => (
               <tr key={lead.id} className="border-t border-(--color-border) align-top">
                 <td className="px-4 py-3 whitespace-nowrap text-(--color-muted)">
-                  {new Date(lead.created_at).toLocaleDateString()}
+                  {/* Rendered on the server (UTC) — pin to local time so evening
+                      leads don't show up dated the next day. */}
+                  {new Date(lead.created_at).toLocaleDateString("en-CA", {
+                    timeZone: "America/Toronto",
+                    month: "short",
+                    day: "numeric",
+                    year: "numeric",
+                  })}
                 </td>
                 <td className="px-4 py-3">
                   <p className="font-semibold text-(--color-ink)">{lead.name}</p>
@@ -122,7 +130,7 @@ export default async function DashboardPage({ searchParams }) {
                 </td>
                 <td
                   className="px-4 py-3 text-(--color-muted) [&_p]:mb-2 [&_p:last-child]:mb-0 [&_strong]:text-(--color-ink) [&_strong]:font-semibold"
-                  dangerouslySetInnerHTML={{ __html: lead.ai_summary || "—" }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeSummaryHtml(lead.ai_summary) || "—" }}
                 />
                 <td className="px-4 py-3">
                   <form

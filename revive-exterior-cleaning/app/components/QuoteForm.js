@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { services } from "../lib/site";
+import { services, siteConfig } from "../lib/site";
 
 const initialForm = {
   name: "",
@@ -53,6 +53,7 @@ function compressImage(file, maxDimension = 1200, quality = 0.7) {
 export default function QuoteForm() {
   const [form, setForm] = useState(initialForm);
   const [photo, setPhoto] = useState(null);
+  const [photoError, setPhotoError] = useState("");
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState("");
@@ -73,6 +74,7 @@ export default function QuoteForm() {
 
   async function handlePhotoChange(e) {
     const file = e.target.files?.[0];
+    setPhotoError("");
     if (!file) {
       setPhoto(null);
       return;
@@ -81,7 +83,11 @@ export default function QuoteForm() {
       const dataUrl = await compressImage(file);
       setPhoto({ name: file.name, dataUrl });
     } catch {
+      // e.g. iPhone HEIC files can't be decoded by most non-Safari browsers.
       setPhoto(null);
+      setPhotoError(
+        "We couldn't read that photo, so it won't be attached. Try a JPG or PNG — or send it to us by email."
+      );
     }
   }
 
@@ -91,7 +97,7 @@ export default function QuoteForm() {
     setError("");
 
     try {
-      await fetch(WEBHOOK_URL, {
+      const res = await fetch(WEBHOOK_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -105,9 +111,14 @@ export default function QuoteForm() {
           }. Preferred date: ${form.date || "n/a"}.`,
         }),
       });
+      // fetch() only rejects on network errors; a 4xx/5xx from the webhook
+      // must not be shown to the customer as a successful submission.
+      if (!res.ok) throw new Error(`Webhook responded ${res.status}`);
       setSubmitted(true);
     } catch {
-      setError("Something went wrong sending your request. Please call or email us directly.");
+      setError(
+        `Something went wrong sending your request. Please call us at ${siteConfig.phone} or email ${siteConfig.email}.`
+      );
     }
 
     setLoading(false);
@@ -115,15 +126,15 @@ export default function QuoteForm() {
 
   if (submitted) {
     return (
-      <div className="bg-white rounded-2xl p-8 md:p-10 text-center">
-        <div className="w-14 h-14 rounded-full bg-(--color-clay)/10 text-(--color-clay) flex items-center justify-center text-2xl mx-auto mb-5">
+      <div className="bg-white rounded-2xl p-8 md:p-10 text-center shadow-2xl shadow-black/30" role="status">
+        <div className="w-14 h-14 rounded-full bg-(--color-terracotta)/10 text-(--color-terracotta) flex items-center justify-center text-2xl mx-auto mb-5">
           ✓
         </div>
         <h3 className="text-2xl font-bold text-(--color-ink) mb-2">
           Thanks, {form.name.split(" ")[0] || "there"}!
         </h3>
         <p className="text-(--color-muted)">
-          Your quote request has been received. We'll be in touch shortly to
+          Your quote request has been received. We’ll be in touch shortly to
           confirm pricing and a time that works for you.
         </p>
       </div>
@@ -133,14 +144,23 @@ export default function QuoteForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-white rounded-2xl p-6 md:p-10 flex flex-col gap-5"
+      className="bg-white rounded-2xl p-6 md:p-10 flex flex-col gap-5 shadow-2xl shadow-black/30"
     >
+      <div className="pb-5 mb-1 border-b border-(--color-border)">
+        <h3 className="text-2xl font-bold text-(--color-ink)">Request a free quote</h3>
+        <p className="text-sm text-(--color-muted) mt-1">
+          Takes about a minute. We usually reply within one business day.
+        </p>
+      </div>
+
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-name" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Name
           </label>
           <input
+            id="quote-name"
+            autoComplete="name"
             required
             value={form.name}
             onChange={(e) => update("name", e.target.value)}
@@ -148,11 +168,13 @@ export default function QuoteForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-phone" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Phone
           </label>
           <input
+            id="quote-phone"
             type="tel"
+            autoComplete="tel"
             required
             value={form.phone}
             onChange={(e) => update("phone", e.target.value)}
@@ -162,11 +184,13 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+        <label htmlFor="quote-email" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
           Email
         </label>
         <input
+          id="quote-email"
           type="email"
+          autoComplete="email"
           required
           value={form.email}
           onChange={(e) => update("email", e.target.value)}
@@ -175,10 +199,12 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
-          Address / Postcode
+        <label htmlFor="quote-address" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          Address / Postal Code
         </label>
         <input
+          id="quote-address"
+          autoComplete="street-address"
           required
           value={form.address}
           onChange={(e) => update("address", e.target.value)}
@@ -188,10 +214,11 @@ export default function QuoteForm() {
 
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-service" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Service Required
           </label>
           <select
+            id="quote-service"
             value={form.service}
             onChange={(e) => update("service", e.target.value)}
             className={inputClasses}
@@ -202,10 +229,11 @@ export default function QuoteForm() {
           </select>
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-date" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Preferred Date
           </label>
           <input
+            id="quote-date"
             type="date"
             value={form.date}
             onChange={(e) => update("date", e.target.value)}
@@ -216,10 +244,11 @@ export default function QuoteForm() {
 
       <div className="grid sm:grid-cols-2 gap-5">
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-bins" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Number of Bins (if applicable)
           </label>
           <input
+            id="quote-bins"
             type="number"
             min="0"
             value={form.bins}
@@ -229,10 +258,11 @@ export default function QuoteForm() {
           />
         </div>
         <div>
-          <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+          <label htmlFor="quote-size" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
             Approx. Driveway / Patio Size
           </label>
           <input
+            id="quote-size"
             value={form.size}
             onChange={(e) => update("size", e.target.value)}
             className={inputClasses}
@@ -264,10 +294,11 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+        <label htmlFor="quote-notes" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
           Additional Information
         </label>
         <textarea
+          id="quote-notes"
           rows={3}
           value={form.notes}
           onChange={(e) => update("notes", e.target.value)}
@@ -277,18 +308,24 @@ export default function QuoteForm() {
       </div>
 
       <div>
-        <label className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
+        <label htmlFor="quote-photo" className="block text-xs font-semibold uppercase tracking-wide text-(--color-muted) mb-2">
           Photo (optional)
         </label>
         <input
+          id="quote-photo"
           type="file"
           accept="image/*"
           onChange={handlePhotoChange}
           className="w-full text-sm text-(--color-muted) file:mr-4 file:py-2.5 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-(--color-cream) file:text-(--color-ink) hover:file:bg-(--color-border)"
         />
+        {photoError && <p className="text-sm text-red-600 mt-2">{photoError}</p>}
       </div>
 
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && (
+        <p role="alert" className="text-sm text-red-700 bg-red-50 border border-red-200 rounded-lg px-4 py-3">
+          {error}
+        </p>
+      )}
 
       <button
         type="submit"

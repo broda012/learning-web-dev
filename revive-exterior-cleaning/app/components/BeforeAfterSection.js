@@ -8,7 +8,7 @@ export default function BeforeAfterSection() {
       <AmbientMist />
       <div className="relative max-w-5xl mx-auto text-center">
         <Reveal>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-clay) text-sm uppercase tracking-[0.2em] mb-4">
+          <p className="eyebrow eyebrow-on-dark">
             See The Difference
           </p>
           <h2 className="text-3xl md:text-5xl font-extrabold text-white mb-5">

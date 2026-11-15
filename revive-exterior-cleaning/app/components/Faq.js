@@ -9,6 +9,7 @@ function FaqItem({ faq, isOpen, onToggle }) {
     <div className="border-b border-(--color-border) py-5">
       <button
         onClick={onToggle}
+        aria-expanded={isOpen}
         className="w-full flex items-start justify-between gap-4 text-left"
       >
         <span className="font-semibold text-(--color-ink)">{faq.q}</span>
@@ -23,6 +24,7 @@ function FaqItem({ faq, isOpen, onToggle }) {
       <div
         className="grid transition-all duration-300 ease-out"
         style={{ gridTemplateRows: isOpen ? "1fr" : "0fr" }}
+        aria-hidden={!isOpen}
       >
         <div className="overflow-hidden">
           <p className="text-(--color-muted) text-base leading-relaxed pt-3 pr-8">{faq.a}</p>
@@ -55,7 +57,7 @@ export default function Faq() {
       />
       <div className="max-w-5xl mx-auto">
         <Reveal>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-sm uppercase tracking-[0.2em] mb-4">
+          <p className="eyebrow">
             FAQs
           </p>
           <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) mb-14 max-w-lg">

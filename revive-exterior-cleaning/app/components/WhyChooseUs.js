@@ -34,7 +34,7 @@ export default function WhyChooseUs() {
         <Reveal>
           <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-4 mb-16">
             <div>
-              <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-sm uppercase tracking-[0.2em] mb-4">
+              <p className="eyebrow">
                 Why Choose Us
               </p>
               <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) max-w-md">
@@ -48,7 +48,7 @@ export default function WhyChooseUs() {
           {reasons.map((reason, i) => (
             <Reveal key={reason.title} delay={i * 60}>
               <div className="flex gap-5 py-6 border-t border-(--color-border)">
-                <span className="font-[family-name:var(--font-mono)] text-(--color-clay) text-sm pt-1 shrink-0 w-8">
+                <span className="font-[family-name:var(--font-mono)] text-(--color-accent-text) text-sm pt-1 shrink-0 w-8">
                   {String(i + 1).padStart(2, "0")}
                 </span>
                 <div>

@@ -3,6 +3,7 @@ import { siteConfig } from "../../lib/site";
 export const metadata = {
   title: `Terms & Conditions | ${siteConfig.name}`,
   description: `Terms and conditions for ${siteConfig.name}.`,
+  alternates: { canonical: "/terms" },
 };
 
 export default function TermsPage() {
@@ -28,8 +29,8 @@ export default function TermsPage() {
           <h2 className="text-xl font-bold text-(--color-ink) mb-2">Scheduling</h2>
           <p>
             Appointment times are arranged directly with you after your quote
-            request. We'll notify you as early as possible if a job needs to
-            be rescheduled, including for weather that isn't suitable for the
+            request. We’ll notify you as early as possible if a job needs to
+            be rescheduled, including for weather that isn’t suitable for the
             work.
           </p>
         </section>
@@ -37,7 +38,7 @@ export default function TermsPage() {
         <section>
           <h2 className="text-xl font-bold text-(--color-ink) mb-2">Property Access</h2>
           <p>
-            You're responsible for ensuring we have safe access to the areas
+            You’re responsible for ensuring we have safe access to the areas
             being cleaned, including any outdoor water supply if agreed in
             advance.
           </p>
@@ -56,7 +57,7 @@ export default function TermsPage() {
           <h2 className="text-xl font-bold text-(--color-ink) mb-2">Contact Us</h2>
           <p>
             Questions about these terms can be sent to{" "}
-            <a href={`mailto:${siteConfig.email}`} className="text-(--color-terracotta) font-medium">
+            <a href={`mailto:${siteConfig.email}`} className="text-(--color-accent-text) font-medium underline underline-offset-2">
               {siteConfig.email}
             </a>
             .

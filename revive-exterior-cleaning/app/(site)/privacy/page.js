@@ -3,6 +3,7 @@ import { siteConfig } from "../../lib/site";
 export const metadata = {
   title: `Privacy Policy | ${siteConfig.name}`,
   description: `Privacy policy for ${siteConfig.name}.`,
+  alternates: { canonical: "/privacy" },
 };
 
 export default function PrivacyPage() {
@@ -48,7 +49,7 @@ export default function PrivacyPage() {
           <h2 className="text-xl font-bold text-(--color-ink) mb-2">Cookies</h2>
           <p>
             This website does not use tracking or advertising cookies. Any
-            data stored in your browser is limited to what's needed for the
+            data stored in your browser is limited to what’s needed for the
             site to function correctly.
           </p>
         </section>
@@ -58,7 +59,7 @@ export default function PrivacyPage() {
           <p>
             If you have questions about this policy or would like your
             information removed from our records, contact us at{" "}
-            <a href={`mailto:${siteConfig.email}`} className="text-(--color-terracotta) font-medium">
+            <a href={`mailto:${siteConfig.email}`} className="text-(--color-accent-text) font-medium underline underline-offset-2">
               {siteConfig.email}
             </a>
             .

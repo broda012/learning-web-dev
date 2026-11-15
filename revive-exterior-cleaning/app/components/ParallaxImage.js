@@ -30,7 +30,8 @@ export default function ParallaxImage({ src, alt, className = "" }) {
 
   return (
     <div ref={ref} className="absolute inset-0 will-change-transform" style={{ transform: "scale(1.12)" }}>
-      <Image src={src} alt={alt} fill priority sizes="100vw" className={className} />
+      {/* `priority` is deprecated in Next 16; eager + high fetch priority for the LCP image. */}
+      <Image src={src} alt={alt} fill loading="eager" fetchPriority="high" sizes="100vw" className={className} />
     </div>
   );
 }

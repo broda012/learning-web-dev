@@ -1,9 +1,12 @@
+import { siteConfig } from "./lib/site";
+
 export default function robots() {
   return {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/dashboard", "/login"],
     },
-    sitemap: "https://revive-exterior-cleaning.vercel.app/sitemap.xml",
+    sitemap: `${siteConfig.url}/sitemap.xml`,
   };
 }

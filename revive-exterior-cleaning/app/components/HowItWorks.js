@@ -24,31 +24,45 @@ export default function HowItWorks() {
     <section className="py-24 md:py-32 px-6 bg-(--color-cream) overflow-hidden">
       <div className="max-w-6xl mx-auto">
         <Reveal>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-sm uppercase tracking-[0.2em] mb-4">
+          <p className="eyebrow">
             How It Works
           </p>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) mb-20 max-w-lg">
+          <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) mb-16 md:mb-20 max-w-lg">
             From first message to finished job.
           </h2>
         </Reveal>
 
-        <div className="relative grid md:grid-cols-4 gap-10 md:gap-6">
-          <div className="hidden md:block absolute top-6 left-[12.5%] right-[12.5%] h-px bg-(--color-border)" />
-
-          {steps.map((step, i) => (
-            <Reveal key={step.title} delay={i * 100}>
-              <div className={`relative ${i % 2 === 1 ? "md:mt-14" : ""}`}>
-                <div className="w-12 h-12 rounded-full bg-(--color-ink) text-white flex items-center justify-center font-[family-name:var(--font-mono)] font-medium mb-6 relative z-10">
-                  {i + 1}
-                </div>
-                <h3 className="font-bold text-lg text-(--color-ink) mb-2">{step.title}</h3>
-                <p className="text-(--color-muted) text-base leading-relaxed max-w-[24ch]">
-                  {step.text}
-                </p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
+        <ol className="grid md:grid-cols-4 md:gap-8">
+          {steps.map((step, i) => {
+            const last = i === steps.length - 1;
+            return (
+              <li key={step.title} className="relative pb-10 md:pb-0">
+                {/* Dashed connector to the next step: vertical on phones, horizontal on desktop. */}
+                {!last && (
+                  <>
+                    <span aria-hidden="true" className="md:hidden absolute left-6 top-14 bottom-2 border-l border-dashed border-(--color-clay)/50" />
+                    <span aria-hidden="true" className="hidden md:block absolute top-6 left-[3.75rem] -right-5 border-t border-dashed border-(--color-clay)/50" />
+                  </>
+                )}
+                <Reveal delay={i * 100} className="flex md:block gap-5">
+                  <div
+                    className={`w-12 h-12 shrink-0 rounded-full text-white flex items-center justify-center font-[family-name:var(--font-mono)] text-sm font-medium ${
+                      last ? "bg-(--color-terracotta)" : "bg-(--color-ink)"
+                    }`}
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
+                  <div className="pt-2.5 md:pt-0 md:mt-6">
+                    <h3 className="font-bold text-lg text-(--color-ink) mb-2">{step.title}</h3>
+                    <p className="text-(--color-muted) text-base leading-relaxed md:max-w-[24ch]">
+                      {step.text}
+                    </p>
+                  </div>
+                </Reveal>
+              </li>
+            );
+          })}
+        </ol>
       </div>
     </section>
   );

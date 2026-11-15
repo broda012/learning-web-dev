@@ -28,7 +28,7 @@ const plexMono = IBM_Plex_Mono({
 });
 
 export const metadata = {
-  metadataBase: new URL("https://revive-exterior-cleaning.vercel.app"),
+  metadataBase: new URL(siteConfig.url),
   title: siteConfig.name,
   robots: {
     index: false,

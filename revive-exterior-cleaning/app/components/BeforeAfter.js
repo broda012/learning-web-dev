@@ -42,9 +42,10 @@ export default function BeforeAfter({
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-4/3 md:aspect-16/9 rounded-2xl overflow-hidden select-none touch-none"
+      className="relative w-full aspect-4/3 md:aspect-16/9 rounded-2xl overflow-hidden select-none"
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
+      onPointerCancel={onPointerUp}
       onPointerLeave={onPointerUp}
     >
       <Image
@@ -74,8 +75,10 @@ export default function BeforeAfter({
         {afterLabel}
       </span>
 
+      {/* touch-none only on the handle, so swiping elsewhere on the image
+          still scrolls the page on phones. */}
       <div
-        className="absolute top-0 bottom-0 w-0.5 bg-white cursor-ew-resize"
+        className="absolute top-0 bottom-0 w-0.5 bg-white cursor-ew-resize touch-none"
         style={{ left: `${position}%` }}
         onPointerDown={onPointerDown}
       >
@@ -87,8 +90,7 @@ export default function BeforeAfter({
           aria-valuemin={0}
           aria-valuemax={100}
           onKeyDown={onKeyDown}
-          onPointerDown={onPointerDown}
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-(--color-terracotta)"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-11 h-11 rounded-full bg-white shadow-lg flex items-center justify-center cursor-ew-resize touch-none focus:outline-none focus:ring-2 focus:ring-(--color-terracotta)"
         >
           <span className="text-(--color-ink) text-sm font-bold">↔</span>
         </div>

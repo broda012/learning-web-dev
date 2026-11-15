@@ -1,6 +1,7 @@
 export const siteConfig = {
   name: "Driveway & Bin Cleaning",
   shortName: "Driveway & Bin Cleaning",
+  url: "https://www.drivewaybincleaning.com",
   tagline: "Bring Your Outdoor Spaces Back to Life.",
   phone: "(548) 255-5788",
   phoneHref: "tel:15482555788",
@@ -29,9 +30,10 @@ export const services = [
     name: "Driveway Cleaning",
     short: "Grime, moss, and stains — lifted for good.",
     description:
-      "We remove built-up dirt, algae, moss, oil stains, and tyre marks to restore your driveway's original surface and curb appeal.",
-    benefits: ["Surface-safe pressure control", "Moss & algae treatment", "Oil & tyre stain removal"],
-    image: "/images/service-driveway.jpg",
+      "We remove built-up dirt, algae, moss, oil stains, and tire marks to restore your driveway's original surface and curb appeal.",
+    benefits: ["Surface-safe pressure control", "Moss & algae treatment", "Oil & tire stain removal"],
+    image: "/images/gallery-driveway2.jpg",
+    imagePosition: "center 70%",
     featured: true,
   },
   {
@@ -42,6 +44,7 @@ export const services = [
       "Professional cleaning and sanitising for wheelie bins — removing bacteria, residue, and the smell nobody wants near their front door.",
     benefits: ["Hot water sanitising", "Odour & bacteria removal", "One-time or recurring plans"],
     image: "/images/service-bins.jpg",
+    imagePosition: "center 82%",
   },
   {
     slug: "patio-cleaning",
@@ -60,6 +63,7 @@ export const services = [
       "Paths, steps, and walkways cleared of slip-risk algae and built-up grime, restoring safe, even footing.",
     benefits: ["Slip-hazard reduction", "Steps & walkways", "Even, streak-free finish"],
     image: "/images/service-walkway.jpg",
+    imagePosition: "center 65%",
   },
   {
     slug: "pressure-washing",
@@ -73,7 +77,7 @@ export const services = [
 ];
 
 export const galleryImages = [
-  { src: "/images/hero-pressure-wash.jpg", alt: "Pressure washing an exterior surface", category: "Pressure Washing" },
+  { src: "/images/service-pressure-washing.jpg", alt: "Freshly pressure-washed concrete beside a lawn", category: "Pressure Washing" },
   { src: "/images/gallery-stairs.jpg", alt: "Worker pressure washing stone steps", category: "Walkways" },
   { src: "/images/service-driveway.jpg", alt: "Clean residential driveway with bins beside the garage", category: "Driveways" },
   { src: "/images/gallery-driveway2.jpg", alt: "Clean concrete driveway in front of a house", category: "Driveways" },
@@ -84,37 +88,6 @@ export const galleryImages = [
   { src: "/images/gallery-bin-single.jpg", alt: "A single wheelie bin on a quiet street", category: "Bins" },
   { src: "/images/before-moss-concrete.jpg", alt: "Moss and algae built up on a stone surface", category: "Before & After" },
   { src: "/images/after-clean-pavers.jpg", alt: "Clean interlocking concrete pavers", category: "Before & After" },
-];
-
-export const reviews = [
-  {
-    name: "M. Carter",
-    location: "North York",
-    rating: 5,
-    service: "Driveway Cleaning",
-    text: "Didn't think our driveway could look new again. No mess left behind and they were done faster than I expected.",
-  },
-  {
-    name: "J. Alavi",
-    location: "Scarborough",
-    rating: 5,
-    service: "Bin Cleaning",
-    text: "Genuinely didn't know bin cleaning was a service until a neighbour mentioned it. Wish I'd started sooner — no more smell.",
-  },
-  {
-    name: "S. Whitfield",
-    location: "Etobicoke",
-    rating: 5,
-    service: "Patio Cleaning",
-    text: "Booked for a family get-together and the patio was spotless the morning of. Easy to schedule, showed up on time.",
-  },
-  {
-    name: "D. Okafor",
-    location: "Mississauga",
-    rating: 5,
-    service: "Pressure Washing",
-    text: "Careful with the surfaces and explained what they were doing before starting. Results speak for themselves.",
-  },
 ];
 
 export const faqs = [

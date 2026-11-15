@@ -16,6 +16,7 @@ function ServiceCard({ service, big = false }) {
         alt={service.name}
         fill
         sizes={big ? "(min-width: 768px) 50vw, 100vw" : "(min-width: 768px) 25vw, 100vw"}
+        style={{ objectPosition: service.imagePosition || "center" }}
         className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink-dark)/95 via-(--color-ink-dark)/40 to-transparent" />
@@ -43,9 +44,9 @@ function ServiceCard({ service, big = false }) {
             ))}
           </ul>
         )}
-        <span className="inline-flex items-center gap-1.5 text-(--color-clay) font-semibold text-sm">
+        <span className="inline-flex items-center gap-1.5 text-(--color-accent-soft) font-semibold text-sm">
           Get a Quote
-          <span className="transition-transform group-hover:translate-x-1">→</span>
+          <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
         </span>
       </div>
     </TiltCard>
@@ -59,12 +60,18 @@ export default function Services() {
     <section id="services" className="py-24 md:py-32 px-6 bg-(--color-cream)">
       <div className="max-w-6xl mx-auto">
         <Reveal>
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-sm uppercase tracking-[0.2em] mb-4">
+          <p className="eyebrow">
             What We Do
           </p>
-          <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) max-w-xl mb-16">
-            Exterior cleaning, done properly.
-          </h2>
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14 md:mb-16">
+            <h2 className="text-3xl md:text-5xl font-extrabold text-(--color-ink) max-w-xl">
+              Exterior cleaning, done properly.
+            </h2>
+            <p className="text-(--color-muted) max-w-sm leading-relaxed">
+              Five services, one standard: the right pressure and method for
+              every surface, and a site left tidier than we found it.
+            </p>
+          </div>
         </Reveal>
 
         <Reveal>

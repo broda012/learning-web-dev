@@ -41,7 +41,7 @@ export default function LoginPage() {
         className="bg-white rounded-2xl shadow-sm border border-(--color-border) p-10 w-full max-w-sm flex flex-col gap-5"
       >
         <div className="text-center mb-2">
-          <p className="font-[family-name:var(--font-mono)] text-(--color-terracotta) text-xs uppercase tracking-[0.2em] mb-2">
+          <p className="font-[family-name:var(--font-mono)] text-(--color-accent-text) text-xs uppercase tracking-[0.2em] mb-2">
             Driveway &amp; Bin Cleaning
           </p>
           <h1 className="text-2xl font-bold text-(--color-ink)">Owner Login</h1>

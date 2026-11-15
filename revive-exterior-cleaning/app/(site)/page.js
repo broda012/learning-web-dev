@@ -4,11 +4,15 @@ import BeforeAfterSection from "../components/BeforeAfterSection";
 import WhyChooseUs from "../components/WhyChooseUs";
 import HowItWorks from "../components/HowItWorks";
 import QuoteSection from "../components/QuoteSection";
-import Reviews from "../components/Reviews";
 import Gallery from "../components/Gallery";
 import ServiceAreas from "../components/ServiceAreas";
 import About from "../components/About";
 import Faq from "../components/Faq";
+import CtaBand from "../components/CtaBand";
+
+export const metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -19,11 +23,11 @@ export default function Home() {
       <WhyChooseUs />
       <HowItWorks />
       <QuoteSection />
-      <Reviews />
       <Gallery />
       <ServiceAreas />
       <About />
       <Faq />
+      <CtaBand />
     </div>
   );
 }
