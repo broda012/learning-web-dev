@@ -22,9 +22,14 @@ export default function Hero() {
         alt="Clean residential driveway leading to a garage, with bins at the curb"
         className="object-cover object-[center_62%]"
       />
-      {/* Legibility washes: bottom-up everywhere, plus a left wash on wider screens. */}
-      <div className="absolute inset-0 bg-gradient-to-t from-(--color-ink-dark) via-(--color-ink-dark)/60 to-(--color-ink-dark)/30" />
-      <div className="absolute inset-0 hidden md:block bg-gradient-to-r from-(--color-ink-dark)/85 via-(--color-ink-dark)/35 to-transparent" />
+      {/* Legibility washes, kept light so the photo stays bright: shade only where text sits. */}
+      {/* Top: just enough behind the navbar. */}
+      <div className="absolute inset-x-0 top-0 h-40 bg-linear-to-b from-black/45 to-transparent" />
+      {/* Phones: text fills the lower part of the screen, so shade the bottom more. */}
+      <div className="absolute inset-0 md:hidden bg-linear-to-t from-(--color-ink-dark)/95 from-15% via-(--color-ink-dark)/60 via-55% to-transparent" />
+      {/* Wider screens: soft wash on the left (behind the text) and along the bottom; the right side stays clear. */}
+      <div className="absolute inset-0 hidden md:block bg-linear-to-r from-(--color-ink-dark)/75 via-(--color-ink-dark)/35 via-45% to-transparent to-75%" />
+      <div className="absolute inset-0 hidden md:block bg-linear-to-t from-(--color-ink-dark)/85 via-(--color-ink-dark)/20 via-35% to-transparent to-60%" />
 
       <div className="relative z-10 max-w-6xl mx-auto w-full px-6 pt-36 pb-12 md:pb-16">
         <p
@@ -36,7 +41,7 @@ export default function Hero() {
         </p>
 
         <h1
-          className="rise text-white font-semibold leading-[0.95] mb-6 text-[clamp(2.6rem,6.4vw,5rem)] max-w-3xl"
+          className="rise text-white font-semibold leading-[0.95] mb-6 text-[clamp(2.6rem,6.4vw,5rem)] max-w-3xl [text-shadow:0_2px_30px_rgb(0_0_0/0.45)]"
           style={{ animationDelay: "180ms" }}
         >
           Bring Your Outdoor Spaces{" "}
@@ -44,7 +49,7 @@ export default function Hero() {
         </h1>
 
         <p
-          className="rise text-white/80 text-lg md:text-xl max-w-xl mb-10 leading-relaxed"
+          className="rise text-white/90 text-lg md:text-xl max-w-xl mb-10 leading-relaxed [text-shadow:0_1px_16px_rgb(0_0_0/0.6)]"
           style={{ animationDelay: "300ms" }}
         >
           Driveway, patio, walkway, and bin cleaning for homes across the
@@ -72,7 +77,7 @@ export default function Hero() {
         </div>
 
         <ul
-          className="rise flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2.5 border-t border-white/15 pt-6 text-white/85 text-sm"
+          className="rise flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2.5 border-t border-white/15 pt-6 text-white/90 text-sm [text-shadow:0_1px_10px_rgb(0_0_0/0.6)]"
           style={{ animationDelay: "540ms" }}
         >
           {trustPoints.map((point) => (
