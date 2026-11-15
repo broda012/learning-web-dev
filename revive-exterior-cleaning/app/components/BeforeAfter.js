@@ -3,14 +3,21 @@
 import { useCallback, useRef, useState } from "react";
 import Image from "next/image";
 
+// The two photos must be the same surface, same framing and same size so the
+// pavers line up as the slider moves.
 export default function BeforeAfter({
-  before = "/images/gallery-moss-tiles.jpg",
-  after = "/images/after-clean-pavers.jpg",
+  before = "/images/pavers-before-dirty.jpg",
+  after = "/images/pavers-after-clean.jpg",
+  beforeAlt = "The same paver driveway before cleaning, with moss in the joints and black algae stains",
+  afterAlt = "Interlocking paver driveway after cleaning, joints clear and surface bright",
   beforeLabel = "Before",
   afterLabel = "After",
+  aspectClass = "aspect-4/3 md:aspect-16/9",
+  sizes = "(min-width: 1088px) 1024px, 100vw",
+  initialPosition = 50,
 }) {
   const containerRef = useRef(null);
-  const [position, setPosition] = useState(50);
+  const [position, setPosition] = useState(initialPosition);
   const dragging = useRef(false);
 
   const updateFromClientX = useCallback((clientX) => {
@@ -42,7 +49,7 @@ export default function BeforeAfter({
   return (
     <div
       ref={containerRef}
-      className="relative w-full aspect-4/3 md:aspect-16/9 rounded-2xl overflow-hidden select-none"
+      className={`relative w-full ${aspectClass} rounded-2xl overflow-hidden select-none`}
       onPointerMove={onPointerMove}
       onPointerUp={onPointerUp}
       onPointerCancel={onPointerUp}
@@ -50,9 +57,9 @@ export default function BeforeAfter({
     >
       <Image
         src={after}
-        alt="After cleaning"
+        alt={afterAlt}
         fill
-        sizes="(min-width: 768px) 900px, 100vw"
+        sizes={sizes}
         className="object-cover"
       />
       <div
@@ -61,9 +68,9 @@ export default function BeforeAfter({
       >
         <Image
           src={before}
-          alt="Before cleaning"
+          alt={beforeAlt}
           fill
-          sizes="(min-width: 768px) 900px, 100vw"
+          sizes={sizes}
           className="object-cover"
         />
       </div>

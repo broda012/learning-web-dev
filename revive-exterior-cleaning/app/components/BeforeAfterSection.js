@@ -22,6 +22,9 @@ export default function BeforeAfterSection() {
 
         <Reveal>
           <BeforeAfter />
+          {/* The "before" is an edited version of the "after" photo, so say so.
+              Replace with real job photos when available. */}
+          <p className="mt-4 text-xs text-white/45">Illustrative example</p>
         </Reveal>
       </div>
     </section>

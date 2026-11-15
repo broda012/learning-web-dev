@@ -1,8 +1,9 @@
 "use client";
 
 import { useRef } from "react";
+import { selectService } from "./SelectServiceLink";
 
-export default function TiltCard({ children, href, className = "", maxTilt = 7 }) {
+export default function TiltCard({ children, href, service, className = "", maxTilt = 7 }) {
   const ref = useRef(null);
 
   function handleMouseMove(e) {
@@ -27,6 +28,7 @@ export default function TiltCard({ children, href, className = "", maxTilt = 7 }
     <a
       ref={ref}
       href={href}
+      onClick={service ? () => selectService(service) : undefined}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
       className={className}

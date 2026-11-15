@@ -7,6 +7,7 @@ function ServiceCard({ service, big = false }) {
   return (
     <TiltCard
       href="#quote"
+      service={service.name}
       className={`group relative block overflow-hidden rounded-2xl md:h-full ${
         big ? "min-h-[420px]" : "min-h-[220px]"
       }`}

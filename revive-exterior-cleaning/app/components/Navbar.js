@@ -8,6 +8,7 @@ import { siteConfig } from "../lib/site";
 // Root-relative so the links also work from /privacy and /terms.
 const links = [
   { href: "/#services", label: "Services" },
+  { href: "/#bins", label: "Bins" },
   { href: "/#before-after", label: "Before & After" },
   { href: "/#about", label: "About" },
   { href: "/#faq", label: "FAQs" },

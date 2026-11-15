@@ -68,6 +68,17 @@ export default function QuoteForm() {
     return () => clearTimeout(timer);
   }, [submitted]);
 
+  // "Book a Bin Clean" / service-card links pre-select their service here.
+  useEffect(() => {
+    function onSelectService(e) {
+      if (services.some((s) => s.name === e.detail)) {
+        setForm((f) => ({ ...f, service: e.detail }));
+      }
+    }
+    window.addEventListener("quote:select-service", onSelectService);
+    return () => window.removeEventListener("quote:select-service", onSelectService);
+  }, []);
+
   function update(field, value) {
     setForm((f) => ({ ...f, [field]: value }));
   }

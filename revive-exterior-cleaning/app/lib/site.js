@@ -85,9 +85,11 @@ export const galleryImages = [
   { src: "/images/service-walkway.jpg", alt: "Clean paved garden walkway", category: "Walkways" },
   { src: "/images/gallery-hex-pavers.jpg", alt: "Close-up of clean hexagonal paving stones", category: "Patios" },
   { src: "/images/service-bins.jpg", alt: "Two wheelie bins ready for collection", category: "Bins" },
+  { src: "/images/bins-before-dirty.jpg", alt: "Wheelie bins before cleaning, covered in grime (illustrative)", category: "Bins" },
+  { src: "/images/bins-after-clean.jpg", alt: "The same wheelie bins after cleaning (illustrative)", category: "Bins" },
   { src: "/images/gallery-bin-single.jpg", alt: "A single wheelie bin on a quiet street", category: "Bins" },
-  { src: "/images/before-moss-concrete.jpg", alt: "Moss and algae built up on a stone surface", category: "Before & After" },
-  { src: "/images/after-clean-pavers.jpg", alt: "Clean interlocking concrete pavers", category: "Before & After" },
+  { src: "/images/pavers-before-dirty.jpg", alt: "Paver driveway before cleaning, with moss in the joints (illustrative)", category: "Before & After" },
+  { src: "/images/pavers-after-clean.jpg", alt: "The same paver driveway after cleaning (illustrative)", category: "Before & After" },
 ];
 
 export const faqs = [

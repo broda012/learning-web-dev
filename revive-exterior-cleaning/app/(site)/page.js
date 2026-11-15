@@ -1,6 +1,7 @@
 import Hero from "../components/Hero";
 import Services from "../components/Services";
 import BeforeAfterSection from "../components/BeforeAfterSection";
+import BinCleaning from "../components/BinCleaning";
 import WhyChooseUs from "../components/WhyChooseUs";
 import HowItWorks from "../components/HowItWorks";
 import QuoteSection from "../components/QuoteSection";
@@ -20,6 +21,7 @@ export default function Home() {
       <Hero />
       <Services />
       <BeforeAfterSection />
+      <BinCleaning />
       <WhyChooseUs />
       <HowItWorks />
       <QuoteSection />
